@@ -3,7 +3,7 @@ from firebase_admin import credentials, firestore
 import os
 
 # 🔥 Path to your Firebase key
-FIREBASE_PATH = "firebase_config/serviceAccountKey.json"
+FIREBASE_PATH = os.getenv("FIREBASE_CREDENTIALS_PATH", "firebase_config/serviceAccountKey.json")
 
 def init_firebase():
     if not firebase_admin._apps:
@@ -13,13 +13,17 @@ def init_firebase():
                 firebase_admin.initialize_app(cred)
                 print("✅ Firebase initialized successfully")
             else:
-                raise FileNotFoundError(
-                    "❌ serviceAccountKey.json not found in firebase_config/"
-                )
+                print(f"ℹ️ serviceAccountKey.json not found at '{FIREBASE_PATH}'. Running in mock database mode.")
         except Exception as e:
             print(f"🔥 Firebase Initialization Error: {e}")
 
 def get_db():
     if not firebase_admin._apps:
         init_firebase()
-    return firestore.client()
+    if not firebase_admin._apps:
+        return None
+    try:
+        return firestore.client()
+    except Exception as e:
+        print(f"🔥 Firestore Client Error: {e}")
+        return None

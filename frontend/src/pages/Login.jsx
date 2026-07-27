@@ -1,16 +1,18 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { Shield } from 'lucide-react';
 
 export default function Login() {
     const [uid, setUid] = useState('user_123'); // Default mock uid
     const { login } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleLogin = (e) => {
         e.preventDefault();
         if (uid.trim()) {
             login(uid);
-            window.location.href = '/dashboard';
+            navigate('/dashboard');
         }
     };
 

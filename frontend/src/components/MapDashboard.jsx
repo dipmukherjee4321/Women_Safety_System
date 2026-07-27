@@ -237,7 +237,7 @@ const MapDashboard = ({ location, locationHistory = [], sosHistory = [] }) => {
                 onCloseClick={() => setSelectedSOS(null)}
                 options={{ pixelOffset: new window.google.maps.Size(0, -10) }}
               >
-                <div style={{ fontFamily: 'system-ui, sans-serif', minWidth: 180. }}>
+                <div style={{ fontFamily: 'system-ui, sans-serif', minWidth: 180 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
                     <span style={{ fontSize: 16 }}>🚨</span>
                     <strong style={{ color: '#dc2626', fontSize: 13 }}>SOS Alert</strong>

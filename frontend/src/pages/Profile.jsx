@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { fetchProfile, updateProfile } from '../services/api';
-import { ChevronLeft, User, Phone } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ChevronLeft, User, Phone, LogOut } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Profile() {
-    const { user } = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({ name: '', phone: '' });
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
@@ -32,12 +33,26 @@ export default function Profile() {
         }
     };
 
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
+
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-4 transition-colors">
             <div className="max-w-2xl mx-auto mt-8">
-                <Link to="/dashboard" className="flex items-center text-slate-500 hover:text-purple-600 mb-6 font-medium">
-                    <ChevronLeft size={20} /> Back to Dashboard
-                </Link>
+                <div className="flex items-center justify-between mb-6">
+                    <Link to="/dashboard" className="flex items-center text-slate-500 hover:text-purple-600 font-medium">
+                        <ChevronLeft size={20} /> Back to Dashboard
+                    </Link>
+                    <button 
+                        onClick={handleLogout}
+                        className="flex items-center space-x-1 px-3 py-1.5 bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 rounded-lg text-sm font-semibold hover:bg-red-200 transition"
+                    >
+                        <LogOut size={16} />
+                        <span>Logout</span>
+                    </button>
+                </div>
 
                 <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl p-8 border border-slate-100 dark:border-slate-700">
                     <h2 className="text-2xl font-bold mb-6 text-slate-800 dark:text-slate-100 flex items-center">
@@ -82,3 +97,4 @@ export default function Profile() {
         </div>
     );
 }
+

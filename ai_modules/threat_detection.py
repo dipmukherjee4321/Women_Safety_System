@@ -54,6 +54,9 @@ def threat_detection_stream():
         cv2.imshow("Video Stream", frame1)
         frame1 = frame2
         ret, frame2 = cap.read()
+        if not ret or frame2 is None:
+            print("End of stream or webcam disconnected.")
+            break
         
         if cv2.waitKey(40) == 27: # Esc key
             break

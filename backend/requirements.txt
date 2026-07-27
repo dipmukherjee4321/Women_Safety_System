@@ -5,3 +5,5 @@ pydantic-settings
 firebase-admin
 twilio
 python-dotenv
+opencv-python
+numpy
